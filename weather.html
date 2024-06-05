@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://kit.fontawesome.com/345e839adb.js" crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            height: 600px;
+            background: linear-gradient(red,orange);
+        }
+        body:hover {
+            background: linear-gradient(blue,purple);
+        }
+        #container {
+            width: 400px;
+            height: 390px;
+            margin: auto;
+            background: linear-gradient(red,orange);
+            justify-content: center;
+            border: 2px solid black;
+            border-radius: 3%;
+            outline: auto;
+        }
+        #container:hover {
+            background: linear-gradient(pink,green);
+            
+        }
+        i {
+            font-size: 80px;
+            color: white;
+            margin: 10px 0px 0px 150px;
+        }
+        
+        #content {
+            padding: 2%;
+        }
+        input {
+            margin-right: 20px;
+            border-radius: 30px;
+            padding: 5px;
+        }
+        input:hover {
+            background:linear-gradient(orange,olive);
+        }
+        button {
+            border-radius: 30px;
+            padding: 5px;
+            background-color: white;
+        }
+        button:hover {
+            background: linear-gradient(red,yellow);
+        }
+        #header {
+            
+            border: 2px solid orange;
+            width: 80%;
+            padding: 13px;
+            margin-left: 20px;
+            border-radius: 30px;
+            background: linear-gradient(red,yellow);
+        }
+        #header:hover {
+            background: linear-gradient(pink,green);
+        }
+        #windcon {
+            display: flex;
+            float: right;
+        }
+        #windcon i {
+            font-size:20px;
+            color: white;
+            margin-right: 10px;
+        }
+        #discon {
+            display: flex;
+        }
+        #discon i {
+            font-size:20px;
+            color: white;
+            margin-right: 10px;
+        }
+        
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div id="content">
+            <div id="header">
+            <input type="text" name="int" id="int" placeholder="Enter City name:"/>
+            <button id="button" onclick="getdata()">Get Weather</button>
+            </div>
+            <i class="fa-solid fa-cloud"></i>
+            <h2 style="text-align: center;" id="temp">24 degree celcius</h2>
+            <h1 style="text-align: center;" id="city">Yamunanagar</h1>
+            <div id="discon">
+            <i class="fa-solid fa-cloud"></i>
+            <p id="dis">Clear sky</p>
+            </div>
+            <div id="windcon">
+            <i class="fa-solid fa-wind"></i>
+            <p id="wind">2.45 km/h</p>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        function getdata() {
+            const input = document.querySelector("#int").value;
+            const btn = document.querySelector("#button");
+                getweather(input);   
+        }
+        async function getweather(city) {
+            const URL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=eb5abc14c764c8fc855ba6547156b186&units=metric`;
+            const promise = await fetch(URL);
+            const data = await promise.json()
+            console.log(data);
+            document.querySelector("#temp").textContent = data.main.temp + " degree celcius";
+            document.querySelector("#city").textContent = data.name ;
+            document.querySelector("#dis").textContent = data.weather[0].description;
+            document.querySelector("#wind").textContent = data.wind.speed = " km/h";
+
+
+        }
+    </script>
+</body>
+</html>
